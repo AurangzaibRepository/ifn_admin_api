@@ -5,12 +5,12 @@ const memberService = require('../services/member.service');
 exports.listingValidator = [
     param('role', 'Invalid role')
         .isIn(USER_ROLES),
-    param('pageNumber', 'pageNumber must be numeric')
+    param('pageNumber', 'Page number must be numeric')
         .isInt()
 ];
 
 exports.detailsValidator = [
-    param('id', 'id must be numeric')
+    param('id', 'Id must be numeric')
         .isInt().bail()
         .custom(async (value) => {
             const user = await memberService.findByAttribute('id', value);
