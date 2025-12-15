@@ -19,7 +19,9 @@ exports.getListing = async (pageNumber, keyword) => {
     // Add filter for full text search
     if (keyword) {
         keyword = {
-            //[Op.or]:
+            [Op.or]: {
+                [Op.like]: { title: `%${keyword}%` }
+            }
         }
     }
 
