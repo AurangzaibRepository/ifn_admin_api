@@ -19,10 +19,13 @@ exports.getListing = async (pageNumber, keyword) => {
     // Add filter for full text search
     if (keyword) {
         where = {
-            [Op.or]: {
-                [Op.like]: { title: `%${keyword}%` }
-            }
-        }
+            [Op.or]: [
+                {
+                    title: { [Op.like]: `%${keyword}%` }
+                },
+                Sequelize.literal(`MATCH(text) AGAINST (${Sequelize.escape(keyword)} IN BOOLEAN MODE)`)
+            ]
+        };
     }
 
     const data = await db.Event.findAll({
