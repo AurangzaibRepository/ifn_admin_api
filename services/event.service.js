@@ -3,7 +3,7 @@ const db = require('../models');
 const pageUtil = require('../utils/page.util');
 
 exports.findByAttribute = async (attribute, value) => {
-    const data = await db.Event.findByOne({
+    const data = await db.Event.findOne({
         where: {
             [attribute]: value
         }
@@ -18,7 +18,7 @@ exports.getListing = async (pageNumber, keyword) => {
 
     // Add filter for full text search
     if (keyword) {
-        keyword = {
+        where = {
             [Op.or]: {
                 [Op.like]: { title: `%${keyword}%` }
             }
@@ -26,6 +26,7 @@ exports.getListing = async (pageNumber, keyword) => {
     }
 
     const data = await db.Event.findAll({
+        where,
         limit,
         offset
     });
@@ -41,13 +42,33 @@ exports.getDetails = async (id) => {
     });
     data = data.toJSON();
 
-    data.registrations = data.EventRegistration.map((registration) => ({
+    data.registrations = data.EventRegistrations.map((registration) => ({
         first_name: registration.User.first_name,
         last_name: registration.User.last_name,
         email: registration.User.email,
         picture: registration.User.picture
     }));
-    delete data.EventREgistration
+    delete data.EventRegistrations;
 
     return data;
+}
+
+exports.createRecord = async (data, fileName) => {
+    const event = await db.Event.create({
+        ...data,
+        picture: fileName,
+        createdBy: 1,
+    });
+
+    return event;
+}
+
+exports.updateRecord = async (id, data, fileName) => {
+    if (fileName) {
+        data.picture = fileName;
+    }
+
+    await db.Event.update(data, {
+        where: { id }
+    });
 }
