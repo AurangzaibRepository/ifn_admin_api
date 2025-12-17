@@ -2,6 +2,16 @@ const { Op, Sequelize } = require('express');
 const db = require('../models');
 const pageUtil = require('../utils/page.util');
 
+exports.findByAttribute = async (attribute, value) => {
+    const data = await db.Blodg.findOne({
+        where: {
+            [attribute]: value
+        }
+    });
+
+    return data;
+}
+
 exports.getListing = async (pageNumber, keyword) => {
     const { limit, offset } = pageUtil.getLimitOffset(pageNumber);
     where = {};

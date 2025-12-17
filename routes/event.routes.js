@@ -14,13 +14,13 @@ module.exports = (app) => {
     router.get('/:id', detailsValidator, events.details);
     router.post(
         '/',
-        upload('events').single('file'),
+        upload('images/events').single('file'),
         createValidator,
         events.create
     );
     router.put(
         '/:id',
-        upload('events').single('file'),
+        upload('images/events').single('file'),
         updateValidator,
         events.update
     );
