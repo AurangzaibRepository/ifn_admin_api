@@ -42,8 +42,9 @@ exports.create = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
     
+    const data = await blogService.createRecord(req.body, req.fileName);
     return res.status(HTTP_STATUS.OK)
-        .json(responseUtil.getResponse(true, 'Blog created successfully'));
+        .json(responseUtil.getResponse(true, 'Blog created successfully', data));
 });
 
 exports.update = asyncHandler(async(req, res) => {
@@ -55,6 +56,7 @@ exports.update = asyncHandler(async(req, res) => {
                 .json(responseUtil.getResponse(false, errors.array()));
         }
         
+        await blogService.updateRecord(req.params.id, req.body, req.fileName);
         return res.status(HTTP_STATUS.OK)
             .json(responseUtil.getResponse(true, 'Blog updated successfully'));
 });

@@ -43,3 +43,22 @@ exports.getDetails = async (id) => {
 
     return data;
 }
+
+exports.createRecord = async (data, fileName) => {
+    const blog = await db.Donation.create({
+        ...data,
+        banner: fileName
+    });
+
+    return blog;
+}
+
+exports.updateRecord = async (id, data, fileName) => {
+    if (fileName) {
+        data.fileName = fileName;
+    }
+
+    await db.Donation.update(data, {
+        where: { id}
+    });
+}
