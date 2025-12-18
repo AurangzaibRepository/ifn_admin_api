@@ -6,7 +6,11 @@ const { USER_STATUS } = require('../enums/status.enum');
 
 module.exports = (sequelize, DataTypes) => {
   class Donation extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models.DonationContribution, {
+        foreignKey: 'donation_id'
+      });
+    }
   }
 
   Donation.init({
