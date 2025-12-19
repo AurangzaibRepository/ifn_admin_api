@@ -25,8 +25,10 @@ exports.details = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
+    const data = await donationService.getDetails(req.params.id);
+
     return res.status(HTTP_STATUS.OK)
-        .json(responseUtil.getResponse(true));
+        .json(responseUtil.getResponse(true, null, data));
 });
 
 exports.create = asyncHandler(async (req, res) => {

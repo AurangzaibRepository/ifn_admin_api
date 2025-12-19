@@ -1,4 +1,4 @@
-const { param, body } = require('express-async-handler');
+const { param, body } = require('express-validator');
 const { USER_STATUS } = require('../enums/status.enum');
 const donationService = require('../services/donation.service');
 

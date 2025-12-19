@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { PAYMENT_STATUS } = require('../enums/status.enum');
 
 module.exports = (sequelize, DataTypes) => {
   class DonationContribution extends Model {
