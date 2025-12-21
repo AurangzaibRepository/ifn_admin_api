@@ -3,7 +3,7 @@ const db = require('../models');
 const pageUtil = require('../utils/page.util');
 
 exports.findByAttribute = async (attribute, value) => {
-    const data = await db.Blodg.findOne({
+    const data = await db.Blog.findOne({
         where: {
             [attribute]: value
         }
@@ -45,7 +45,7 @@ exports.getDetails = async (id) => {
 }
 
 exports.createRecord = async (data, fileName) => {
-    const blog = await db.Donation.create({
+    const blog = await db.Blog.create({
         ...data,
         banner: fileName
     });

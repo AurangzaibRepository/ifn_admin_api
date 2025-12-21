@@ -11,7 +11,7 @@ const router = express.Router();
 
 module.exports = (app) => {
     router.get('/listing/:pageNumber', listingValidator, blogs.listing);
-    router.get('/:id', detailsValidator, blogs.listing);
+    router.get('/:id', detailsValidator, blogs.details);
     router.post(
         '/',
         upload('images/blogs').single('file'),

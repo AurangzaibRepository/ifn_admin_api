@@ -37,7 +37,9 @@ function upload(folder) {
       contentType: multerS3.AUTO_CONTENT_TYPE,
       key: (req, file, cb) => {
         const ext = path.extname(file.originalname);
-        cb(null, `${folder}/${file.fieldname}-${Date.now()}${ext}`);
+        const fileName = `${file.fieldname}-${Date.now()}${ext}`;
+        req.fileName = fileName;
+        cb(null, `${folder}/${fileName}`);
       }
     });
   

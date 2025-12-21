@@ -30,7 +30,8 @@ exports.details = asyncHandler(async (req, res) => {
 
     const data = await blogService.getDetails(req.params.id);
 
-    return data;
+    return res.status(HTTP_STATUS.OK)
+        .json(responseUtil.getResponse(true, null, data));
 });
 
 exports.create = asyncHandler(async (req, res) => {
