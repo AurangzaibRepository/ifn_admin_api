@@ -10,6 +10,10 @@ exports.findByAttribute = async (attribute, value) => {
     return data;
 }
 
+exports.getDetails = async (id) => {
+    const polling = await db.Polling.findbyPk(id);
+}
+
 exports.createRecord = async (data) => {
     const polling = await db.Polling.create(data);
 
