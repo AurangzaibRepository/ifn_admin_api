@@ -13,7 +13,10 @@ exports.listing = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
-    return responseUtil.getResponse(true);
+    const data = await donationService.getListing(req.params.pageNumber, req.query.keyword);
+
+    return res.status(HTTP_STATUS.OK)
+        .json(responseUtil.getResponse(true, null, data));
 });
 
 exports.details = asyncHandler(async (req, res) => {
