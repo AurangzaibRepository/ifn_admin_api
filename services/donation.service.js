@@ -1,6 +1,7 @@
 const { Op, Sequelize } = require('sequelize');
 const db = require('../models');
 const pageUtil = require('../utils/page.util');
+const { formatListing } = require('../utils/formatter.util');
 
 exports.findByAttribute = async (attribute, value) => {
     const data = await db.Donation.findOne({
@@ -13,7 +14,7 @@ exports.findByAttribute = async (attribute, value) => {
 }
 
 exports.getListing = async (pageNumber, keyword) => {
-    const where = {};
+    let where = {};
     const { limit, offset } = pageUtil.getLimitOffset(pageNumber);
 
     // Apply filters
@@ -23,18 +24,18 @@ exports.getListing = async (pageNumber, keyword) => {
                 {
                     title: { [Op.like]: `%${keyword}%` }
                 },
-                Sequelize.literal(`Match(title) AGAINST (${Sequelize.escape(keyword)} IN BOOLEAN MODE)`)
+                Sequelize.literal(`MATCH(title) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
             ]
         };
     }
 
-    const data = await db.Donation.findAll({
+    const { count, rows } = await db.Donation.findAndCountAll({
             where,
             limit,
             offset
         });
 
-    return data;
+    return formatListing(pageNumber, count, rows);
 }
 
 exports.getDetails = async (id) => {
