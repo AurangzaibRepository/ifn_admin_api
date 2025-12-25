@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     total_contribution: {
       allowNull: false,
+      defaultValue: 0,
       type: DataTypes.DECIMAL(8,2)
     },
     start_date: {

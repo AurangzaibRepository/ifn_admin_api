@@ -43,6 +43,8 @@ exports.create = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
+    await donationService.createRecord(req.body);
+
     return res.status(HTTP_STATUS.OK)
         .json(responseUtil.getResponse(true, 'Donation created successfully'));
 });
@@ -55,6 +57,8 @@ exports.update = asyncHandler(async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST)
             .json(responseUtil.getResponse(false, errors.array()));
     }
+
+    await donationService.updateRecord(req.params.id, req.body);
 
     return res.status(HTTP_STATUS.OK)
         .json(responseUtil.getResponse(true, 'Donation updated successfully'));

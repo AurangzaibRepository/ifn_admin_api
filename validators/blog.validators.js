@@ -27,7 +27,7 @@ exports.createValidator = [
     body('text', 'Text is required')
         .notEmpty(),
     body('status').optional()
-        .isIn(BLOG_STATUS)
+        .isIn(Object.values(BLOG_STATUS))
         .withMessage('Invalid status')
 ];
 

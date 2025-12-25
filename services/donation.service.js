@@ -48,9 +48,11 @@ exports.getDetails = async (id) => {
 }
 
 exports.createRecord = async (data) => {
-
+    await db.Donation.create(data);
 }
 
 exports.updateRecord = async (id, data) => {
-    
+    await db.Donation.update(data, {
+        where: { id }
+    });
 }
