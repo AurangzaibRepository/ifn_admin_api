@@ -24,7 +24,7 @@ exports.getListing = async (pageNumber, keyword) => {
                 {
                     title: { [Op.like]: `%${keyword}%` }
                 },
-                Sequelize.literal(`MATCH(title) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+                Sequelize.literal(`MATCH(description) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
             ]
         };
     }

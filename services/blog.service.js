@@ -1,6 +1,7 @@
 const { Op, Sequelize } = require('express');
 const db = require('../models');
 const pageUtil = require('../utils/page.util');
+const { formatListing } = require('../utils/formatter.util');
 
 exports.findByAttribute = async (attribute, value) => {
     const data = await db.Blog.findOne({
@@ -14,7 +15,7 @@ exports.findByAttribute = async (attribute, value) => {
 
 exports.getListing = async (pageNumber, keyword) => {
     const { limit, offset } = pageUtil.getLimitOffset(pageNumber);
-    where = {};
+    let where = {};
 
     if (keyword) {
         where = {
@@ -24,18 +25,18 @@ exports.getListing = async (pageNumber, keyword) => {
                     [Op.like]: `%${keyword}%`
                     }
                 },
-                Sequelize.literal(`MATCH(text) AGAINST (${Sequelize.escape(keyword)} IN BOOLEAN MODE)`)
+                Sequelize.literal(`MATCH(text) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
             ]
         }
     }
 
-    const data = await db.Blog.findAll({
+    const { count, rows } = await db.Blog.findAndCountAll({
         where,
         limit,
         offset
     });
     
-    return data;
+    return formatListing(pageNumber, count, rows);
 }
 
 exports.getDetails = async (id) => {
