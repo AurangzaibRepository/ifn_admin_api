@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const errorHandler = require('./middlewares/error-handler.middleware');
 //const authenticationMiddleware = require('./middlewares/authentication.middleware');
 dotenv.config();
@@ -9,6 +10,7 @@ const app = express();
 // Middlewares
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
 app.use('/images', express.static('public/images'));
 //app.use(authenticationMiddleware);
 
