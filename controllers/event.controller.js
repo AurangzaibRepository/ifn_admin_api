@@ -63,3 +63,10 @@ exports.update = asyncHandler(async (req, res) => {
     return res.status(HTTP_STATUS.OK)
         .json(responseUtil.getResponse(true, 'Event updated successfully'));
 });
+
+exports.updateEventDetails = asyncHandler(async (req, res) => {
+    await eventService.updateRecord(req.params.id, req.body);
+
+    return res.status(HTTP_STATUS.OK)
+        .json(responseUtil.getResponse(true, 'Event upadted successfully'));
+});
