@@ -17,11 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      const data = this.get({ plain: true });
+      /*const data = this.get({ plain: true });
       delete data.createdAt;
       delete data.updatedAt;
+      delete data.createdBy;*/
+      const { createdBy, createdAt, updatedAt, ...restData } = this.get();
 
-      return data;
+      return restData;
     }
   }
 

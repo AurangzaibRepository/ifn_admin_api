@@ -24,7 +24,7 @@ module.exports = (app) => {
         updateValidator,
         events.update
     );
-    router.patch('/:id', events.updateEventDetails);
+    router.patch('/:id', detailsValidator, events.updateEventDetails);
     
     app.use('/api/events', router);
 }
