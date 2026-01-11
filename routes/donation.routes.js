@@ -13,6 +13,7 @@ module.exports = (app) => {
     router.get('/:id', detailsValidator, donations.details);
     router.post('/', createValidator, donations.create);
     router.put('/:id', updateValidator, donations.update);
+    router.patch('/:id', detailsValidator, donations.update);
 
     app.use('/api/donations', router);
 }
