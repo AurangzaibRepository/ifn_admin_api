@@ -1,4 +1,4 @@
-const { Op, Sequelize } = require('express');
+const { Op, Sequelize } = require('sequelize');
 const db = require('../models');
 const pageUtil = require('../utils/page.util');
 const { formatListing } = require('../utils/formatter.util');
