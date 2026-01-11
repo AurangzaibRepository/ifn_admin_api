@@ -1,5 +1,6 @@
 const { Op, Sequelize } = require('sequelize');
 const db = require('../models');
+const memberService = require('./member.service');
 const pageUtil = require('../utils/page.util');
 const { formatListing } = require('../utils/formatter.util');
 
@@ -39,11 +40,23 @@ exports.getListing = async (pageNumber, keyword) => {
 }
 
 exports.getDetails = async (id) => {
-    const data = await db.Donation.findByPk(id, {
+    let data = await db.Donation.findByPk(id, {
         include: {
-            model: db.DonationContribution
+            model: db.DonationContribution,
+            attributes: ['id', 'donation_id', 'user_id', 'amount', 'payment_status', 'createdAt']
         }
     });
+    data = data.toJSON();
+
+    data.DonationContributions = await Promise.all(data.DonationContributions.map(async (contribution) => {
+        const user = await memberService.getDetails(contribution.user_id);
+        return {
+            ...contribution,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email
+        };
+    }));
 
     return data;
 }

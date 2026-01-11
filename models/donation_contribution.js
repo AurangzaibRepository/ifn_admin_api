@@ -3,6 +3,7 @@ const {
   Model
 } = require('sequelize');
 const { PAYMENT_STATUS } = require('../enums/status.enum');
+const formatUtil = require('../utils/formatter.util');
 
 module.exports = (sequelize, DataTypes) => {
   class DonationContribution extends Model {
@@ -49,6 +50,13 @@ module.exports = (sequelize, DataTypes) => {
     payment_intent: DataTypes.STRING(200),
     payment_intent_id: DataTypes.STRING(100),
     receipt_url: DataTypes.STRING(700),
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const rawValue = this.getDataValue('createdAt');
+        return rawValue ? formatUtil.formatDate(rawValue) : null;
+      }
+    }
   }, {
     sequelize,
     modelName: 'DonationContribution',

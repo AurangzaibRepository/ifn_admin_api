@@ -3,6 +3,7 @@ const {
   Model
 } = require('sequelize');
 const { USER_STATUS } = require('../enums/status.enum');
+const formatUtil = require('../utils/formatter.util');
 
 module.exports = (sequelize, DataTypes) => {
   class Donation extends Model {
@@ -33,11 +34,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     start_date: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATEONLY,
+      get() {
+        const rawValue = this.getDataValue('start_date');
+        return rawValue ? formatUtil.formatDate(rawValue) : null;
+      }
     },
     end_date: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATEONLY,
+      get() {
+        const rawValue = this.getDataValue('end_date');
+        return rawValue ? formatUtil.formatDate(rawValue) : null;
+      }
     },
     status: {
       defaultValue: USER_STATUS.ACIVE,
