@@ -43,3 +43,9 @@ exports.getDetails = async (id) => {
 
     return data;
 }
+
+exports.updateRecord = async (id, data) => {
+    await db.BanquetBooking.update(data, {
+        where: { id }
+    });
+}

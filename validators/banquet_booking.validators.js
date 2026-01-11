@@ -2,7 +2,7 @@ const { param } = require('express-validator');
 const BanquetBookingService = require('../services/banquet_booking.service');
 
 exports.detailsValidator = [
-    param('id', 'Id must be numeric')
+    param('id', 'Id must be numeric').isInt()
         .bail()
         .custom(async (value) => {
             const booking = await BanquetBookingService.findByAttribute('id', value);
