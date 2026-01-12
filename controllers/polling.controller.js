@@ -13,8 +13,10 @@ exports.listing = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
+    const data = await pollingService.getListing(req.params.pageNumber, req.query.keyword);
+
     return res.status(HTTP_STATUS.OK)
-        .json(responseUtil.getResponse(true, null));
+        .json(responseUtil.getResponse(true, null, data));
 });
 
 exports.details = asyncHandler(async (req, res) => {
@@ -26,8 +28,10 @@ exports.details = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
+    const data = await pollingService.getDetails(req.params.id);
+
     return res.status(HTTP_STATUS.OK)
-        .json(responseUtil.getResponse(true, null));
+        .json(responseUtil.getResponse(true, null, data));
 });
 
 exports.create = asyncHandler(async (req, res) => {

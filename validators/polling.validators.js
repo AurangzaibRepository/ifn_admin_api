@@ -1,11 +1,6 @@
 const { param, body } = require('express-validator');
 const pollingService = require('../services/polling.service');
 
-exports.listingValidator = [
-    param('pageNumber', 'Page number must be numeric')
-        .isInt()
-];
-
 exports.detailsValidator = [
     param('id', 'Id must numeric')
         .isInt().bail()

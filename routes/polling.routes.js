@@ -1,7 +1,7 @@
 const express = require('express');
 const pollings = require('../controllers/polling.controller');
+const { listingValidator } = require('../validators/blog.validators');
 const {
-    listingValidator,
     detailsValidator,
     createValidator,
     updateValidator
