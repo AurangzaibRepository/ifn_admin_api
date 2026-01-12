@@ -48,6 +48,17 @@ exports.getDetails = async (id) => {
     return data;
 }
 
+exports.getVotes = async (pollingId) => {
+    const data = await db.PollingVote.findAll({
+        where: { polling_id: pollingId },
+        include: {
+            model: db.PollingParticipant
+        }
+    });
+
+    return data;
+}
+
 exports.createRecord = async (data) => {
     const polling = await db.Polling.create(data);
 

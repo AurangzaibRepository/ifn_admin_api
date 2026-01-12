@@ -10,6 +10,7 @@ const router = express.Router();
 
 module.exports = (app) => {
     router.get('/listing/:pageNumber', listingValidator, pollings.listing);
+    router.get('/votes/:id', detailsValidator, pollings.votes );
     router.get('/:id', detailsValidator, pollings.details);
     router.post('/', createValidator, pollings.create);
     router.put('/:id', updateValidator, pollings.update);
