@@ -45,7 +45,7 @@ exports.create = asyncHandler(async (req, res) => {
 
     const data = await pollingService.createRecord(req.body);
 
-    return res.status(HTTP_STATUS.ok)
+    return res.status(HTTP_STATUS.OK)
         .json(responseUtil.getResponse(true, 'Polling created successfully', data));
 });
 

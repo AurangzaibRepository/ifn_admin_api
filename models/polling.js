@@ -2,13 +2,10 @@
 const {
   Model
 } = require('sequelize');
+const formatUtil = require('../utils/formatter.util');
+
 module.exports = (sequelize, DataTypes) => {
   class Polling extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       Polling.hasMany(models.PollingParticipant, {
         foreignKey: 'polling_id'
@@ -31,11 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     start_date: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATEONLY,
+      get() {
+        const rawValue = this.getDataValue('start_date');
+        return rawValue ? formatUtil.formatDate(rawValue) : null;
+      }
     },
     end_date: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATEONLY,
+      get() {
+        const rawValue = this.getDataValue('end_date');
+        return rawValue ? formatUtil.formatDate(rawValue) : null;
+      }
     },
     total_votes:{
       defaultValue: 0,

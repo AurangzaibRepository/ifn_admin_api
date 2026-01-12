@@ -1,3 +1,4 @@
+const { Op, Sequelize } = require('sequelize');
 const db = require('../models');
 
 exports.findByAttribute = async (attribute, value) => {
