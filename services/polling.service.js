@@ -49,12 +49,29 @@ exports.getDetails = async (id) => {
 }
 
 exports.getVotes = async (pollingId) => {
-    const data = await db.PollingVote.findAll({
+    let data = await db.PollingVote.findAll({
         where: { polling_id: pollingId },
         include: {
-            model: db.PollingParticipant
+            model: db.User,
+            attributes: ['id','first_name','last_name','email','picture']
         }
     });
+
+    // Group by participant_id
+    data = data.reduce((participant, row) => {
+       if (! participant[row.participant_id]) {
+            participant[row.participant_id] = [];
+       }
+
+       participant[row.participant_id].push({
+            first_name: row.User.first_name,
+            last_name: row.User.last_name,
+            email: row.User.email,
+            picture: row.User.picture,
+        });
+
+        return participant;
+    }, {});
 
     return data;
 }
