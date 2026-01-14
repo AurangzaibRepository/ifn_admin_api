@@ -8,12 +8,12 @@ exports.login = asyncHandler(async (req, res) => {
     // Check errors
     const errors = formattedValidationResult(req);
 
-    if (errors) {
+    if (! errors.isEmpty()) {
         return res.status(HTTP_STATUS.BAD_REQUEST)
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
-    const data = await authService.login(req.body);
+    const data = await authService.login(req.body.email);
 
     return res.status(HTTP_STATUS.OK)
         .json(responseUtil.getResponse(true, null, data));
