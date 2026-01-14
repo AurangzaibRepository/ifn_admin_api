@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const errorHandler = require('./middlewares/error-handler.middleware');
-//const authenticationMiddleware = require('./middlewares/authentication.middleware');
+const authenticationMiddleware = require('./middlewares/authentication.middleware');
 dotenv.config();
 
 const app = express();
@@ -17,7 +17,7 @@ app.use('/images', express.static('public/images'));
 require('./routes/auth')(app);
 
 // Routes
-//app.use(authenticationMiddleware);
+app.use(authenticationMiddleware);
 require('./routes')(app);
 
 // Error handler
