@@ -12,9 +12,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
 app.use('/images', express.static('public/images'));
-//app.use(authenticationMiddleware);
+
+// Public routes
+require('./routes/auth')(app);
 
 // Routes
+//app.use(authenticationMiddleware);
 require('./routes')(app);
 
 // Error handler
