@@ -49,15 +49,15 @@ exports.create = asyncHandler(async (req, res) => {
 });
 
 exports.update = asyncHandler(async(req, res) => {
-        // Check errors
-        const errors = formattedValidationResult(req);
+    // Check errors
+    const errors = formattedValidationResult(req);
 
-        if (! errors.isEmpty()) {
-            return res.status(HTTP_STATUS.BAD_REQUEST)
-                .json(responseUtil.getResponse(false, errors.array()));
-        }
-        
-        await blogService.updateRecord(req.params.id, req.body, req.fileName);
-        return res.status(HTTP_STATUS.OK)
-            .json(responseUtil.getResponse(true, 'Blog updated successfully'));
+    if (! errors.isEmpty()) {
+        return res.status(HTTP_STATUS.BAD_REQUEST)
+            .json(responseUtil.getResponse(false, errors.array()));
+    }
+    
+    await blogService.updateRecord(req.params.id, req.body, req.fileName);
+    return res.status(HTTP_STATUS.OK)
+        .json(responseUtil.getResponse(true, 'Blog updated successfully'));
 });

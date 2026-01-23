@@ -28,7 +28,19 @@ exports.createValidator = [
         .notEmpty(),
     body('status').optional()
         .isIn(Object.values(BLOG_STATUS))
-        .withMessage('Invalid status')
+        .withMessage('Invalid status'),
+    body('file').custom((value, { req }) => {
+        // Bypass for update
+        if (req.method == 'PUT') {
+            return true;
+        }
+
+        if (! req.fileName) {
+            throw new Error('Banner is required');
+        }
+
+        return true;
+    })
 ];
 
 exports.updateValidator = [

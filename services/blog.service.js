@@ -56,10 +56,10 @@ exports.createRecord = async (data, fileName) => {
 
 exports.updateRecord = async (id, data, fileName) => {
     if (fileName) {
-        data.fileName = fileName;
+        data.banner = fileName;
     }
 
-    await db.Donation.update(data, {
-        where: { id}
+    await db.Blog.update(data, {
+        where: { id }
     });
 }
