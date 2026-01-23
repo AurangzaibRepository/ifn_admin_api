@@ -51,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
     defaultScope: {
       attributes: {
         exclude: ['createdAt', 'updatedAt', 'payment_intent', 'payment_intent_id']
-      }
+      },
+      order: [ ['id', 'DESC'] ]
     }
   });
 
