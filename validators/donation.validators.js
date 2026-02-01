@@ -28,7 +28,7 @@ exports.createValidator = [
         .notEmpty(),
     body('goal', 'Goal is required')
         .notEmpty().bail()
-        .isInt().withMessage('Goal must be numeric'),
+        .isFloat({ min: 1 }).withMessage('Goal must be positive number'),
     body('start_date', 'Start date is required')
         .notEmpty().bail()
         .matches(/^\d{4}-\d{2}-\d{2}$/)
