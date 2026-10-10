@@ -19,16 +19,17 @@ exports.getListing = async (pageNumber, keyword) => {
     // Add filter
     if (keyword) {
         where = {
-            [Op.or]: {
-                [Op.like]: {first_name: `%${keyword}%`},
-                [Op.like]: {last_name: `%${keyword}%`},
-                [Op.like]: {email: `%${keyword}%`}
-            }
+            [Op.or]: [
+                { first_name: { [Op.like]: `%${keyword}%` } },
+                { last_name: { [Op.like]: `%${keyword}%` } },
+                { email: { [Op.like]: `%${keyword}%` } }
+            ]
         };
     }
 
     const data = await db.User.findAll({
         where,
+        order: [['first_name', 'ASC']],
         limit,
         offset
     });
@@ -40,4 +41,10 @@ exports.getDetails = async (id) => {
     const data = await db.User.findByPk(id);
 
     return data;
+}
+
+exports.changeStatus = async (id, status) => {
+    await db.User.update({ status }, {
+        where: { id }
+    });
 }

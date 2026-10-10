@@ -1,6 +1,6 @@
 const { Op, Sequelize } = require('sequelize');
 const db = require('../models');
-const memberService = require('./member.service');
+const memberService = require('./user.service');
 const pageUtil = require('../utils/page.util');
 const { formatListing } = require('../utils/formatter.util');
 

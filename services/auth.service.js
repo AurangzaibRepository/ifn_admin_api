@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const db = require('../models');
-const memberService = require('../services/member.service');
+const memberService = require('./user.service');
 
 exports.login = async (email) => {
     const user = await memberService.findByAttribute('email', email);

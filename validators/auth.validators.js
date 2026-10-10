@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 const bcrypt = require('bcrypt');
-const memberService = require('../services/member.service');
+const memberService = require('../services/user.service');
 
 exports.loginValidator = [
     body('email', 'Email is required').notEmpty().bail()
