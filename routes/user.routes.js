@@ -10,7 +10,7 @@ const router = express.Router();
 module.exports = (app) => {
     router.get('/listing/:pageNumber', listingValidator, users.listing);
     router.get('/:id', detailsValidator, users.details);
-    router.put('/:id', changeStatusValidator, users.changeStatus);
+    router.patch('/:id', changeStatusValidator, users.changeStatus);
 
     app.use('/api/users', router);
 }

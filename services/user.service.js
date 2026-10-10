@@ -28,6 +28,19 @@ exports.getListing = async (pageNumber, keyword) => {
     }
 
     const data = await db.User.findAll({
+        attributes: {
+            include: [
+                [
+                    Sequelize.fn(
+                        'CONCAT',
+                        Sequelize.col('first_name'),
+                        ' ',
+                        Sequelize.col('last_name')
+                    ),
+                    'name'
+                ]
+            ]
+        },
         where,
         order: [['first_name', 'ASC']],
         limit,

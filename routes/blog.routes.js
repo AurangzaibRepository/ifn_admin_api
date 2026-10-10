@@ -24,6 +24,7 @@ module.exports = (app) => {
         updateValidator,
         blogs.update
     );
+    router.patch('/:id', detailsValidator, blogs.update);
 
     app.use('/api/blogs', router);
 }
