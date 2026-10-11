@@ -27,10 +27,10 @@ exports.createValidator = [
         .notEmpty().bail()
         .isISO8601({ strict: true, strictSeparator: true})
             .withMessage('Invalid start date'),
-    body('end_date', 'End date is required')
+    /*body('end_date', 'End date is required')
         .notEmpty().bail()
         .isISO8601({ strict: true, strictSeparator: true})
-            .withMessage('Invalid end date')
+            .withMessage('Invalid end date')*/
 ];
 
 exports.updateValidator = [

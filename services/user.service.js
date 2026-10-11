@@ -12,20 +12,39 @@ exports.findByAttribute = async (attribute, value) => {
     return data;
 }
 
-exports.getListing = async (pageNumber, keyword) => {
+exports.getListing = async (pageNumber, keyword, membersExpiring) => {
     const { limit, offset } = pageUtil.getLimitOffset(pageNumber);
-    let where = {};
+    const conditions = [];
 
-    // Add filter
     if (keyword) {
-        where = {
+        conditions.push({
             [Op.or]: [
                 { first_name: { [Op.like]: `%${keyword}%` } },
                 { last_name: { [Op.like]: `%${keyword}%` } },
                 { email: { [Op.like]: `%${keyword}%` } }
             ]
-        };
+        });
     }
+    
+    if (membersExpiring === '1') {
+        const today = new Date();
+        const next30Days = new Date();
+        next30Days.setDate(today.getDate() + 30);
+    
+        conditions.push({
+            role: 'Member',
+            membership_expiry_date: {
+                [Op.between]: [
+                    today.toISOString().split('T')[0],
+                    next30Days.toISOString().split('T')[0]
+                ]
+            }
+        });
+    }
+    
+    const where = conditions.length > 0
+        ? { [Op.and]: conditions }
+        : {};
 
     const data = await db.User.findAll({
         attributes: {
@@ -48,7 +67,7 @@ exports.getListing = async (pageNumber, keyword) => {
     });
 
     return data;
-}
+};
 
 exports.getDetails = async (id) => {
     const data = await db.User.findByPk(id);

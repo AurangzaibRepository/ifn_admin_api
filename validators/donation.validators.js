@@ -29,14 +29,14 @@ exports.createValidator = [
     body('goal', 'Goal is required')
         .notEmpty().bail()
         .isFloat({ min: 1 }).withMessage('Goal must be positive number'),
-    body('start_date', 'Start date is required')
+    /*body('start_date', 'Start date is required')
         .notEmpty().bail()
         .matches(/^\d{4}-\d{2}-\d{2}$/)
         .withMessage('Invalid start date'),
     body('end_date', 'End date is required')
         .notEmpty().bail()
         .isISO8601({ strict: true, strictSeparator: true})
-        .withMessage('Invalid end date'),
+        .withMessage('Invalid end date'),*/
     body('status', 'Status is required')
         .optional()
         .isIn(Object.values(USER_STATUS))

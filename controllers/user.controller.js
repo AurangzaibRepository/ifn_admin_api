@@ -13,7 +13,11 @@ exports.listing = asyncHandler(async (req, res) => {
             .json(responseUtil.getResponse(false, errors.array()));
     }
 
-    const data = await userService.getListing(req.params.pageNumber, req.query.keyword);
+    const data = await userService.getListing(
+        req.params.pageNumber,
+        req.query.keyword,
+        req.query.members_expiring
+    );
 
     return res.status(HTTP_STATUS.OK)
         .json(responseUtil.getResponse(true, null, data));
