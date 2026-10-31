@@ -18,13 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      /*const data = this.get({ plain: true });
+      const data = this.get({ plain: true });
       delete data.createdAt;
       delete data.updatedAt;
-      delete data.createdBy;*/
-      const { createdBy, createdAt, updatedAt, ...restData } = this.get();
 
-      return restData;
+      return data;
     }
   }
 
@@ -44,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     end_date: {
+      allowNull: false,
       type: DataTypes.DATE,
       get() {
         const rawValue = this.getDataValue('end_date');
@@ -82,7 +81,9 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Event',
     tableName: 'events',
     defaultScope: {
-      order: [['id', 'DESC']]
+      where: {
+        status: USER_STATUS.ACIVE
+      }
     }
   });
 

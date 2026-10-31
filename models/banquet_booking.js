@@ -7,7 +7,9 @@ const formatUtil = require('../utils/formatter.util');
 
 module.exports = (sequelize, DataTypes) => {
   class BanquetBooking extends Model {
-    static associate(models) {}
+    static associate(models) {
+      // define association here
+    }
   }
 
   BanquetBooking.init({
@@ -21,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       get() {
         const rawValue = this.getDataValue('booking_date');
+
         return rawValue ? formatUtil.formatDate(rawValue) : null;
       }
     },
@@ -50,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'banquet_bookings',
     defaultScope: {
       attributes: {
-        exclude: ['createdAt', 'updatedAt', 'payment_intent', 'payment_intent_id']
+        exclude: ['createdAt', 'updatedAt']
       },
       order: [ ['id', 'DESC'] ]
     }

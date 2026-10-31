@@ -49,6 +49,20 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       defaultValue: USER_STATUS.ACIVE,
       type: DataTypes.ENUM(...Object.values(USER_STATUS))
+    },
+    picture: {
+      type: DataTypes.STRING(100),
+      get() {
+        const fileName = this.getDataValue('picture');
+        if (!fileName) return null;
+
+        if (fileName.startsWith('http://') || fileName.startsWith('https://')) {
+          return fileName;
+        }
+
+        const baseUrl = (process.env.BASE_URL || '').replace(/\/+$/, '');
+        return `${baseUrl}/public/images/donations/${fileName}`;
+      }
     }
   }, {
     sequelize,

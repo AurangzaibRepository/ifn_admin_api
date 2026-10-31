@@ -53,7 +53,7 @@ exports.update = asyncHandler(async (req, res) => {
     // Check errors
     const errors = formattedValidationResult(req);
 
-    if (! errors.isEmpty()) {
+    if (!errors.isEmpty()) {
         return res.status(HTTP_STATUS.BAD_REQUEST)
             .json(responseUtil.getResponse(false, errors.array()));
     }

@@ -6,11 +6,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class PollingParticipant extends Model {
     static associate(models) {
-      this.belongsTo(models.Polling, {
+      PollingParticipant.belongsTo(models.Polling, {
         foreignKey: 'polling_id'
       });
 
-      this.hasMany(models.PollingVote, {
+      PollingParticipant.hasMany(models.PollingVote, {
         foreignKey: 'participant_id'
       });
     }

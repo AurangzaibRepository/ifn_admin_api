@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.PollingParticipant, {
         foreignKey: 'participant_id'
       });
-
-      this.belongsTo(models.User, {
-        foreignKey: 'user_id'
-      });
     }
   }
 

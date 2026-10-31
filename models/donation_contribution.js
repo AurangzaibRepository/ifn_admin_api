@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.belongsTo(models.User, {
-        foreignKey: 'user_id'
+        'foreignKey': 'user_id' 
       });
     }
   }
@@ -54,7 +54,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       get() {
         const rawValue = this.getDataValue('createdAt');
-        return rawValue ? formatUtil.formatDate(rawValue) : null;
+        if (! rawValue) return null;
+
+        return formatUtil.formatDate(rawValue);
       }
     }
   }, {
@@ -63,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'donation_contributions',
     defaultScope: {
       attributes: {
-        exclude: ['createdAt', 'updatedAt']
+        exclude: ['updatedAt']
       }
     }
   });

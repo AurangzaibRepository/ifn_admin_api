@@ -34,14 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING(100),
     state: DataTypes.STRING(100),
     postal_code: DataTypes.INTEGER,
-    membership_registration_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-  },
-  membership_expiry_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-  },
     password: {
       type: DataTypes.STRING(300),
       set(value) {
@@ -56,13 +48,17 @@ module.exports = (sequelize, DataTypes) => {
         const fileName= this.getDataValue('picture');
         if (!fileName) return null;
 
-        return `${process.env.AWS_BASE_URL}/images/members/${fileName}`;
+        return `${process.env.BASE_URL}/images/members/${fileName}`;
       }
     },
     status: {
       defaultValue: USER_STATUS.ACIVE,
       type: DataTypes.ENUM(...Object.values(USER_STATUS))
     },
+    membership_type: DataTypes.STRING(100),
+    spouse_first_name: DataTypes.STRING(80),
+    spouse_last_name: DataTypes.STRING(80),
+    spouse_email: DataTypes.STRING(100)
   }, {
     sequelize,
     modelName: 'User',

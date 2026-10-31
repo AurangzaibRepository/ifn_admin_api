@@ -2,8 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const formatUtil = require('../utils/formatter.util');
-
 module.exports = (sequelize, DataTypes) => {
   class Polling extends Model {
     static associate(models) {
@@ -28,19 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     start_date: {
       allowNull: false,
-      type: DataTypes.DATEONLY,
-      get() {
-        const rawValue = this.getDataValue('start_date');
-        return rawValue ? formatUtil.formatDate(rawValue) : null;
-      }
+      type: DataTypes.DATEONLY
     },
     end_date: {
       allowNull: false,
-      type: DataTypes.DATEONLY,
-      get() {
-        const rawValue = this.getDataValue('end_date');
-        return rawValue ? formatUtil.formatDate(rawValue) : null;
-      }
+      type: DataTypes.DATEONLY
     },
     total_votes:{
       defaultValue: 0,
