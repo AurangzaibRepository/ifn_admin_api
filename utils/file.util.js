@@ -29,6 +29,7 @@ const s3 = new S3Client({
     return multer({ storage });
 }*/
 
+/*
 function upload(folder) {
     const storage = multerS3({
       s3: s3,
@@ -45,5 +46,33 @@ function upload(folder) {
   
     return multer({ storage });
   }  
+*/
+  
+function upload(folder = '') {
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        // Constructs the directory path: 'public/images' or 'public/images/<folder>'
+        const uploadPath = path.join('public', 'images', folder);
+  
+        // Create the directory if it doesn't already exist
+        if (!fs.existsSync(uploadPath)) {
+          fs.mkdirSync(uploadPath, { recursive: true });
+        }
+  
+        cb(null, uploadPath);
+      },
+      filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const fileName = `${file.fieldname}-${Date.now()}${ext}`;
+        
+        // Keep attaching the fileName to req if your existing routes rely on it
+        req.fileName = fileName; 
+  
+        cb(null, fileName);
+      }
+    });
+  
+    return multer({ storage });
+  }
 
 exports.upload = upload;
