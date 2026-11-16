@@ -23,6 +23,7 @@ require('./routes/auth')(app);
 require('./routes')(app);
 
 // Swagger middleware 
+// http://localhost:8000/api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Error handler
