@@ -1,6 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 const errorHandler = require('./middlewares/error-handler.middleware');
 const authenticationMiddleware = require('./middlewares/authentication.middleware');
 dotenv.config();
@@ -19,6 +21,9 @@ require('./routes/auth')(app);
 // Routes
 //app.use(authenticationMiddleware);
 require('./routes')(app);
+
+// Swagger middleware 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Error handler
 app.use(errorHandler);
