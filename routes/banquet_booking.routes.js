@@ -53,6 +53,49 @@ module.exports = (app) => {
      *              description: Internal server error
      */
     router.get('/:id', detailsValidator, banquetBookings.details);
+
+    /**
+     * @swagger
+     * /api/banquet-bookings/{id}:
+     *   patch:
+     *      summary: Partially update booking
+     *      description: Update specific fields on booking
+     *      tags:
+     *          - Banquet bookings
+     *      parameters:
+     *          - in: path
+     *            name: id
+     *            required: true
+     *            schema:
+     *              type: integer
+     *            description: Banquet booking Id
+     *      requestBody:
+     *          reuquired: true
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          title:
+     *                              type: string
+     *                          text:
+     *                              type: string
+     *                          status:
+     *                              type: string
+     *                              enum: [Draft, Publish, Archive]
+     *                              example: Draft
+     *                          image:
+     *                              type: string
+     *      responses:
+     *          201:
+     *              description: Success
+     *          400:
+     *              description: Validation error
+     *          404:
+     *              description: Booking not found
+     *          500:
+     *              description: Internal server error
+     */
     router.patch('/:id', detailsValidator, banquetBookings.updateBookingDetails);
 
     app.use('/api/banquet-bookings', router);

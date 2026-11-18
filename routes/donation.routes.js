@@ -153,6 +153,54 @@ module.exports = (app) => {
      *              description: Internal server error
      */
     router.put('/:id', updateValidator, donations.update);
+
+    /**
+     * @swagger
+     * /api/donations/{id}:
+     *   patch:
+     *      summary: Partially update donation
+     *      description: Update specific fields on donation
+     *      tags:
+     *          - Donations
+     *      parameters:
+     *          - in: path
+     *            name: id
+     *            required: true
+     *            schema:
+     *              type: integer
+     *            description: Donation Id
+     *      requestBody:
+     *          reuquired: true
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          title:
+     *                              type: string
+     *                          description:
+     *                              type: string
+     *                          goal:
+     *                              type: number
+     *                              format: double
+     *                          start_date:
+     *                              type: string
+     *                              format: date
+     *                          end_date:
+     *                              type: string
+     *                              format: date
+     *                          total_contribution:
+     *                              type: number
+     *      responses:
+     *          201:
+     *              description: Success
+     *          400:
+     *              description: Validation error
+     *          404:
+     *              description: Donation not found
+     *          500:
+     *              description: Internal server error
+     */
     router.patch('/:id', detailsValidator, donations.update);
 
     app.use('/api/donations', router);

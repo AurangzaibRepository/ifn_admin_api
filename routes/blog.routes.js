@@ -150,6 +150,49 @@ module.exports = (app) => {
         updateValidator,
         blogs.update
     );
+
+    /**
+     * @swagger
+     * /api/blogs/{id}:
+     *   patch:
+     *      summary: Partially update blog
+     *      description: Update specific fields on blog
+     *      tags:
+     *          - Blogs
+     *      parameters:
+     *          - in: path
+     *            name: id
+     *            required: true
+     *            schema:
+     *              type: integer
+     *            description: Blog Id
+     *      requestBody:
+     *          reuquired: true
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                          title:
+     *                              type: string
+     *                          text:
+     *                              type: string
+     *                          status:
+     *                              type: string
+     *                              enum: [Draft, Publish, Archive]
+     *                              example: Draft
+     *                          image:
+     *                              type: string
+     *      responses:
+     *          201:
+     *              description: Success
+     *          400:
+     *              description: Validation error
+     *          404:
+     *              description: Blog not found
+     *          500:
+     *              description: Internal server error
+     */
     router.patch('/:id', detailsValidator, blogs.update);
 
     app.use('/api/blogs', router);

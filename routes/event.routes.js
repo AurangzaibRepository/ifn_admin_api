@@ -164,6 +164,55 @@ module.exports = (app) => {
         updateValidator,
         events.update
     );
+
+    /**
+     * @swagger
+     * /api/events/{id}:
+     *   patch:
+     *      summary: Partially update event
+     *      description: Update specific fields on event
+     *      tags:
+     *          - Events
+     *      parameters:
+     *          - in: path
+     *            name: id
+     *            required: true
+     *            schema:
+     *              type: integer
+     *            description: Event Id
+     *      requestBody:
+     *          reuquired: true
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      type: object
+     *                      properties:
+     *                           title:
+     *                              type: string
+     *                          description:
+     *                              type: string
+     *                          total_seats:
+     *                              type: number
+     *                          seats_booked:
+     *                              type: number
+     *                          start_date:
+     *                              type: string
+     *                              format: date
+     *                              example: 2026-11-16
+     *                          end_date:
+     *                              type: string
+     *                              format: date
+     *                              example: '2026-11-25'
+     *      responses:
+     *          201:
+     *              description: Success
+     *          400:
+     *              description: Validation error
+     *          404:
+     *              description: Event not found
+     *          500:
+     *              description: Internal server error
+     */
     router.patch('/:id', detailsValidator, events.updateEventDetails);
     
     app.use('/api/events', router);
