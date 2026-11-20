@@ -21,6 +21,22 @@ exports.detailsValidator = [
         })
 ];
 
+exports.createValidator = [
+    body('first_name', 'First name is required')
+        .notEmpty(),
+    body('last_name', 'Last name is required')
+        .notEmpty(),
+    body('email', 'Email is required')
+        .notEmpty()
+        .isEmail(),
+    body('role', 'Role is required')
+];
+
+exports.updateValidator = [
+    ...this.detailsValidator,
+    ...this.createValidator
+];
+
 exports.changeStatusValidator = [
     param('id', 'Id must be numeric')
         .isInt().bail(),

@@ -75,6 +75,16 @@ exports.getDetails = async (id) => {
     return data;
 }
 
+exports.create = async (data) => {
+    await db.User.create(data);
+}
+
+exports.update = async (id, data) => {
+    await db.User.update(data, {
+        where: { id }
+    });
+}
+
 exports.changeStatus = async (id, status) => {
     await db.User.update({ status }, {
         where: { id }

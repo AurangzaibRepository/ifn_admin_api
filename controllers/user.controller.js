@@ -38,6 +38,34 @@ exports.details = asyncHandler(async (req, res) => {
         .json(responseUtil.getResponse(true, null, data));
 });
 
+exports.create = asyncHandler(async (req, res) => {
+    // Check errors
+    const errors = formattedValidationResult(req);
+
+    if (! errors.isEmpty()) {
+        return res.status(HTTP_STATUS.BAD_REQUEST)
+            .json(responseUtil.getResponse(false, errors.array()));
+    }
+
+    await userService.create(req.body);
+
+    return res.status(HTTP_STATUS.OK)
+        .json(responseUtil.getResponse(true, 'User created successfully'));
+});
+
+exports.update = asyncHandler(async (req, res) => {
+    // Check errors
+    const errors = formattedValidationResult(req);
+    if (! errors.isEmpty()) {
+        return res.status(HTTP_STATUS.BAD_REQUEST)
+            .json(responseUtil.getResponse(false, errors.array()));
+    }
+    await userService.update(req.params.id, req.body);
+
+    return res.status(HTTP_STATUS.OK)
+        .json(responseUtil.getResponse(true, 'User updated successfully'));
+});
+
 exports.changeStatus = asyncHandler(async (req, res) => {
     const errors = formattedValidationResult(req);
 
